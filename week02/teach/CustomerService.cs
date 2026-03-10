@@ -11,24 +11,66 @@ public class CustomerService {
         // Test Cases
 
         // Test 1
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: Create a queue with an invalid size (0 or negative)
+        // Expected Result: Queue should default to size 10
         Console.WriteLine("Test 1");
 
-        // Defect(s) Found: 
+        var cs1 = new CustomerService(0);
+        Console.WriteLine(cs1);
+
+        // Defect(s) Found: None. The constructor correctly sets default size to 10.
 
         Console.WriteLine("=================");
 
         // Test 2
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: Add customers until queue reaches maximum size
+        // Expected Result: When the queue is full, it should not allow more customers
         Console.WriteLine("Test 2");
 
-        // Defect(s) Found: 
+        var cs2 = new CustomerService(2);
+
+        // Simulating customers by directly adding to queue using the method
+        // (In real test, user would enter values)
+
+        cs2.AddNewCustomer();
+        cs2.AddNewCustomer();
+        cs2.AddNewCustomer();
+
+        Console.WriteLine(cs2);
+
+        // Defect(s) Found: Queue allows more customers than the maximum size.
 
         Console.WriteLine("=================");
 
-        // Add more Test Cases As Needed Below
+        // Test 3
+        // Scenario: Serve a customer when the queue is empty
+        // Expected Result: Error message should appear
+        Console.WriteLine("Test 3");
+
+        var cs3 = new CustomerService(5);
+        cs3.ServeCustomer();
+
+        // Defect(s) Found: Program crashes when serving from empty queue.
+
+        Console.WriteLine("=================");
+
+        // Test 4
+        // Scenario: Add customers and then serve one
+        // Expected Result: First customer should be served and removed from queue
+        Console.WriteLine("Test 4");
+
+        var cs4 = new CustomerService(5);
+
+        cs4.AddNewCustomer();
+        cs4.AddNewCustomer();
+
+        cs4.ServeCustomer();
+
+        Console.WriteLine(cs4);
+
+        // Defect(s) Found: Wrong customer is displayed.
+
+        Console.WriteLine("=================");
     }
 
     private readonly List<Customer> _queue = new();
@@ -67,7 +109,7 @@ public class CustomerService {
     /// </summary>
     private void AddNewCustomer() {
         // Verify there is room in the service queue
-        if (_queue.Count > _maxSize) {
+        if (_queue.Count >= _maxSize) {
             Console.WriteLine("Maximum Number of Customers in Queue.");
             return;
         }
@@ -88,10 +130,15 @@ public class CustomerService {
     /// Dequeue the next customer and display the information.
     /// </summary>
     private void ServeCustomer() {
-        _queue.RemoveAt(0);
-        var customer = _queue[0];
-        Console.WriteLine(customer);
+    if (_queue.Count == 0) {
+        Console.WriteLine("No customers in queue.");
+        return;
     }
+
+    var customer = _queue[0];
+    Console.WriteLine(customer);
+    _queue.RemoveAt(0);
+}
 
     /// <summary>
     /// Support the WriteLine function to provide a string representation of the
