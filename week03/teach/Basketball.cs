@@ -13,24 +13,43 @@
 
 using Microsoft.VisualBasic.FileIO;
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
 public class Basketball
 {
-    public static void Run()
+    public static void ProcessBasketballData(string filePath)
     {
-        var players = new Dictionary<string, int>();
+        Dictionary<string, int> playerPoints = new Dictionary<string, int>();
 
-        using var reader = new TextFieldParser("basketball.csv");
-        reader.TextFieldType = FieldType.Delimited;
-        reader.SetDelimiters(",");
-        reader.ReadFields(); // ignore header row
-        while (!reader.EndOfData) {
-            var fields = reader.ReadFields()!;
-            var playerId = fields[0];
-            var points = int.Parse(fields[8]);
+        foreach (var line in File.ReadLines(filePath))
+        {
+            var parts = line.Split(',');
+
+            string playerId = parts[0];
+            int points = int.Parse(parts[8]);
+
+            // Si no existe, inicializar
+            if (!playerPoints.ContainsKey(playerId))
+            {
+                playerPoints[playerId] = 0;
+            }
+
+            // Sumar puntos
+            playerPoints[playerId] += points;
         }
 
-        Console.WriteLine($"Players: {{{string.Join(", ", players)}}}");
+        // Ordenar de mayor a menor
+        var topPlayers = playerPoints
+            .OrderByDescending(p => p.Value)
+            .Take(10);
 
-        var topPlayers = new string[10];
+        // Mostrar resultado
+        foreach (var player in topPlayers)
+        {
+            Console.WriteLine($"Player: {player.Key}, Points: {player.Value}");
+        }
     }
 }
