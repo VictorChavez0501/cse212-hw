@@ -31,36 +31,36 @@ public class Maze
     /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
     /// </summary>
     public void MoveLeft()
+{
+    if (_maze[_current].left)
     {
-        // FILL IN CODE
+        _current = (_current.x - 1, _current.y);
     }
+}
 
-    /// <summary>
-    /// Check to see if you can move right.  If you can, then move.  If you
-    /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
-    /// </summary>
-    public void MoveRight()
+public void MoveRight()
+{
+    if (_maze[_current].right)
     {
-        // FILL IN CODE
+        _current = (_current.x + 1, _current.y);
     }
+}
 
-    /// <summary>
-    /// Check to see if you can move up.  If you can, then move.  If you
-    /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
-    /// </summary>
-    public void MoveUp()
+public void MoveUp()
+{
+    if (_maze[_current].up)
     {
-        // FILL IN CODE
+        _current = (_current.x, _current.y - 1);
     }
+}
 
-    /// <summary>
-    /// Check to see if you can move down.  If you can, then move.  If you
-    /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
-    /// </summary>
-    public void MoveDown()
+public void MoveDown()
+{
+    if (_maze[_current].down)
     {
-        // FILL IN CODE
+        _current = (_current.x, _current.y + 1);
     }
+}
 
     public string GetStatus()
     {
