@@ -1,6 +1,5 @@
 using System.Text.Json;
 using System.Net.Http;
-using System.Text.Json;
 
 public static class SetsAndMaps
 {
@@ -152,7 +151,6 @@ public static class SetsAndMaps
     {
         string json = await client.GetStringAsync(url);
 
-        FeatureCollection data = JsonSerializer.Deserialize<FeatureCollection>(json);
 
         foreach (Feature feature in data.Features)
 {
